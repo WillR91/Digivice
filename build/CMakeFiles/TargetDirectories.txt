@@ -1,5 +1,0 @@
-Z:/Digivice/build/CMakeFiles/edit_cache.dir
-Z:/Digivice/build/CMakeFiles/rebuild_cache.dir
-Z:/Digivice/build/src/CMakeFiles/DigiviceSim.dir
-Z:/Digivice/build/src/CMakeFiles/edit_cache.dir
-Z:/Digivice/build/src/CMakeFiles/rebuild_cache.dir
