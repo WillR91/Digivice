@@ -1,0 +1,33 @@
+{
+	"textures": [
+		{
+			"image": "TaiTest-0.png",
+			"size": {
+				"w": 192,
+				"h": 192
+			},
+			"sprites": [
+				{
+					"filename": "114_0_0.png",
+					"region": {
+						"x": 0,
+						"y": 0,
+						"w": 192,
+						"h": 192
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:b753c7395bf1d43dd1ba54fa895a8728:2462f25dbd72978e661a869d0b2c3618:fe1fd80450bf7a82e1c0097c95c9d3d3$"
+	}
+}
