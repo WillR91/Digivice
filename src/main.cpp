@@ -1,24 +1,27 @@
-// Full code for src/main.cpp - 2 Frame Animation with TaiTest names
+// Full code for src/main.cpp - Centered 2 Frame Animation
 
 #include "platform/pc/pc_display.h"
-// --- Include the headers for your frames ---
-// !!! These MUST match the filenames in your assets folder !!!
-#include "TaiTest_0.h" // Frame 1 Header (adjust if filename differs)
-#include "TaiTest2_0.h" // Frame 2 Header (adjust if filename differs)
+// --- Include the generated headers for your frames ---
+// !!! Double-check these filenames match your files in assets/ !!!
+#include "TaiTest_0.h" // Frame 1 Header
+#include "TaiTest2_0.h" // Frame 2 Header
 // ---
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_log.h>
 #include <vector> // Keep include just in case
 
+// --- Window Dimensions ---
+const int WINDOW_WIDTH = 466;
+const int WINDOW_HEIGHT = 466;
+
 // --- Animation Setup ---
 
-// Array of pointers to the pixel data arrays defined in the generated header files
-// !!! Uses variable names from your header files !!!
+// Pointers to the pixel data arrays defined in the generated header files
+// !!! Uses variable names based on your header file !!!
 const uint16_t* animation_frames[] = {
     TaiTest_0_data, // Pointer to Frame 1 data array
     TaiTest2_0_data // Pointer to Frame 2 data array
 };
-// Calculate how many frames are in the array automatically
 const int animation_frame_count = sizeof(animation_frames) / sizeof(animation_frames[0]);
 
 // Define animation speed (milliseconds between frame changes)
@@ -26,7 +29,7 @@ const Uint32 animation_delay = 500; // 0.5 seconds per frame
 
 // --- Sprite Dimensions ---
 // Use the dimensions defined in the first frame's header
-// !!! Uses define names from your first header file !!!
+// !!! Uses define names based on your header file !!!
 #ifndef TAITEST_0_WIDTH
     #error "TAITEST_0_WIDTH not defined - check TaiTest_0.h"
 #endif
@@ -40,19 +43,15 @@ const int SPRITE_HEIGHT = TAITEST_0_HEIGHT; // Should be 192
 
 int main(int argc, char* argv[]) {
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_DEBUG);
-    SDL_Log("--- Starting Animation Test ---");
+    SDL_Log("--- Starting Centered Animation Test ---"); // Updated log
 
     PCDisplay display;
     SDL_Log("--- PCDisplay object created ---");
 
     SDL_Log("--- Calling display.init() ---");
-    // Using sprite dimensions for window size for now
-    if (!display.init("Digivice Sim - Animated!", SPRITE_WIDTH * 2, SPRITE_HEIGHT * 2)) { // Made window bigger to fit sprite
+    if (!display.init("Digivice Sim - Centered!", WINDOW_WIDTH, WINDOW_HEIGHT)) { // Use constants
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "!!! display.init() failed!");
-        const char* sdlError = SDL_GetError();
-        if (sdlError && sdlError[0] != '\0') {
-             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Last SDL Error: %s", sdlError);
-        }
+        // ... (error handling) ...
         SDL_Quit();
         return 1;
     }
@@ -82,15 +81,19 @@ int main(int argc, char* argv[]) {
             last_animation_update_time = current_time;
         }
 
+        // --- Calculate Centered Position ---
+        // Integer division is fine here
+        int draw_x = (WINDOW_WIDTH / 2) - (SPRITE_WIDTH / 2);
+        int draw_y = (WINDOW_HEIGHT / 2) - (SPRITE_HEIGHT / 2);
+
         // --- Drawing ---
         display.clear(0x0000); // Clear screen to black
 
-        // Draw the *current* animation frame using the index we calculated
-        // Drawing at (10, 10) for visibility
-        display.drawPixels(10, 10,                 // Position (X, Y)
-                           SPRITE_WIDTH,           // Use width from defines
-                           SPRITE_HEIGHT,          // Use height from defines
-                           animation_frames[current_frame_index]); // Use current frame data pointer
+        // Draw the *current* animation frame AT THE CALCULATED CENTERED POSITION
+        display.drawPixels(draw_x, draw_y,             // <<< Use calculated X, Y
+                           SPRITE_WIDTH,
+                           SPRITE_HEIGHT,
+                           animation_frames[current_frame_index]);
 
         // --- Update Screen ---
         display.present();
