@@ -1,33 +1,33 @@
-#include <SDL2/SDL.h>
+// Full code for src/platform/pc/pc_display.h - CORRECTED INCLUDE PATH
+
 #pragma once
 
-#include "idisplay.h" // Include the interface we are implementing#include <SDL2/SDL.h>     // Include the main SDL2 header
+#include "idisplay.h" // <<< CORRECTED: Removed "hal/" prefix
+#include <SDL2/SDL.h>
 
-// PC-specific implementation of the IDisplay interface using SDL2.
 class PCDisplay : public IDisplay {
 public:
-    PCDisplay();                  // Constructor
-    ~PCDisplay() override;        // Destructor (marked override)
+    PCDisplay();
+    ~PCDisplay() override;
 
-    // --- Implementations of the IDisplay virtual functions ---
     bool init(const char* title, int width, int height) override;
     void clear(uint16_t color) override;
-    // ADDED declaration for drawPixels implementation
-    void drawPixels(int x, int y, int w, int h, const uint16_t* data) override;
+    // --- MODIFIED drawPixels declaration (Matches interface) ---
+    void drawPixels(int dstX, int dstY,
+                    int width, int height,
+                    const uint16_t* srcData, int srcDataW, int srcDataH,
+                    int srcX, int srcY) override;
+    // --- End of modification ---
     void present() override;
     void close() override;
 
-    // Helper function to check if initialization was successful
     bool isInitialized() const;
-    // Helper function (optional, might be useful later)
     SDL_Window* getWindow() const;
 
 
-private: // Internal implementation details
-    SDL_Window* window_ = nullptr;     // Pointer to the SDL window object
-    SDL_Renderer* renderer_ = nullptr; // Pointer to the SDL renderer object
-    bool initialized_ = false;         // Tracks if init() was successful
-
-    // Internal helper function to convert colors
+private:
+    SDL_Window* window_ = nullptr;
+    SDL_Renderer* renderer_ = nullptr;
+    bool initialized_ = false;
     SDL_Color convert_rgb565_to_sdl_color(uint16_t color565);
 };

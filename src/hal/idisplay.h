@@ -1,28 +1,29 @@
-#pragma once // Standard guard to prevent including this file multiple times
+// Full code for src/hal/idisplay.h
 
-#include <cstdint> // Needed for types like uint16_t
+#pragma once
 
-// Interface class defining what any display must be able to do.
+#include <cstdint>
+
 class IDisplay {
 public:
-    // Virtual destructor (important for base classes)
     virtual ~IDisplay() = default;
 
-    // --- Pure virtual functions (= 0) must be implemented by derived classes ---
-
-    // Initialize the display
     virtual bool init(const char* title, int width, int height) = 0;
-
-    // Clear the display to a single color (using RGB565 format)
     virtual void clear(uint16_t color) = 0;
 
-    // Draw a block of pixel data (RGB565 format) at specific coordinates
-    // THIS IS THE NEW FUNCTION DECLARATION WE ADDED
-    virtual void drawPixels(int x, int y, int w, int h, const uint16_t* data) = 0;
+    // --- MODIFIED drawPixels ---
+    // Draws a sub-rectangle from source data onto the screen.
+    // dstX, dstY: Top-left corner on the screen destination.
+    // width, height: Size of the rectangle to draw (on screen AND from source).
+    // srcData: Pointer to the start of the *entire* source image data.
+    // srcDataW, srcDataH: Full width and height of the *entire* source image data.
+    // srcX, srcY: Top-left corner *within the source data* to start copying from.
+    virtual void drawPixels(int dstX, int dstY,
+                            int width, int height,
+                            const uint16_t* srcData, int srcDataW, int srcDataH,
+                            int srcX, int srcY) = 0;
+    // --- End of modification ---
 
-    // Present the drawn buffer to the screen (make it visible)
     virtual void present() = 0;
-
-    // Clean up display resources
     virtual void close() = 0;
 };

@@ -278,7 +278,11 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:/Digivice/src/main.cpp \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h \
   Z:/Digivice/assets/TaiTest2_0.h \
   Z:/Digivice/assets/TaiTest_0.h \
+  Z:/Digivice/assets/bg_layer0_png.h \
+  Z:/Digivice/assets/walk_frame_0.h \
+  Z:/Digivice/assets/walk_frame_1.h \
   Z:/Digivice/src/hal/idisplay.h \
+  Z:/Digivice/src/animation.h \
   Z:/Digivice/src/platform/pc/pc_display.h
 
 src/CMakeFiles/DigiviceSim.dir/platform/pc/pc_display.cpp.obj: Z:/Digivice/src/platform/pc/pc_display.cpp \
@@ -968,6 +972,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/tr1/ell_integral.tcc:
 
 C:/msys64/ucrt64/include/c++/14.2.0/tr1/exp_integral.tcc:
 
+Z:/Digivice/assets/walk_frame_0.h:
+
 C:/msys64/ucrt64/include/c++/14.2.0/tr1/gamma.tcc:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniint8intrin.h:
@@ -1246,7 +1252,13 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavesintrin.h:
 
 Z:/Digivice/assets/TaiTest_0.h:
 
+Z:/Digivice/assets/bg_layer0_png.h:
+
+Z:/Digivice/assets/walk_frame_1.h:
+
 Z:/Digivice/src/hal/idisplay.h:
+
+Z:/Digivice/src/animation.h:
 
 Z:/Digivice/src/platform/pc/pc_display.cpp:
 

@@ -1,0 +1,33 @@
+{
+	"textures": [
+		{
+			"image": "WalkTest1-0.png",
+			"size": {
+				"w": 192,
+				"h": 192
+			},
+			"sprites": [
+				{
+					"filename": "116_0_0.png",
+					"region": {
+						"x": 0,
+						"y": 0,
+						"w": 192,
+						"h": 192
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:5e27d2c6ab0b092e97395a8b8d74fcd5:679b9c11e600d23397ecbab26ff4d9d1:fef69da4f4a90ecbe67ee880312cecb8$"
+	}
+}

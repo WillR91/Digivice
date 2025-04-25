@@ -1,29 +1,33 @@
 src/CMakeFiles/DigiviceSim.dir/platform/pc/pc_display.cpp.obj: \
  Z:\Digivice\src\platform\pc\pc_display.cpp \
- Z:\Digivice\src\platform\pc\pc_display.h \
- C:/msys64/ucrt64/include/SDL2/SDL.h \
+ Z:\Digivice\src\platform\pc\pc_display.h Z:/Digivice/src/hal/idisplay.h \
+ C:/msys64/ucrt64/include/c++/14.2.0/cstdint \
+ C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
+ C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/os_defines.h \
+ C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/cpu_defines.h \
+ C:/msys64/ucrt64/include/c++/14.2.0/pstl/pstl_config.h \
+ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
+ C:/msys64/ucrt64/include/stdint.h C:/msys64/ucrt64/include/crtdefs.h \
+ C:/msys64/ucrt64/include/corecrt.h C:/msys64/ucrt64/include/_mingw.h \
+ C:/msys64/ucrt64/include/_mingw_mac.h \
+ C:/msys64/ucrt64/include/_mingw_secapi.h \
+ C:/msys64/ucrt64/include/vadefs.h \
+ C:/msys64/ucrt64/include/sdks/_mingw_ddk.h \
+ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \
+ C:/msys64/ucrt64/include/stddef.h C:/msys64/ucrt64/include/SDL2/SDL.h \
  C:/msys64/ucrt64/include/SDL2/SDL_main.h \
  C:/msys64/ucrt64/include/SDL2/SDL_stdinc.h \
  C:/msys64/ucrt64/include/SDL2/SDL_config.h \
  C:/msys64/ucrt64/include/SDL2/SDL_platform.h \
  C:/msys64/ucrt64/include/SDL2/begin_code.h \
  C:/msys64/ucrt64/include/SDL2/close_code.h \
- C:/msys64/ucrt64/include/sys/types.h C:/msys64/ucrt64/include/crtdefs.h \
- C:/msys64/ucrt64/include/corecrt.h C:/msys64/ucrt64/include/_mingw.h \
- C:/msys64/ucrt64/include/_mingw_mac.h \
- C:/msys64/ucrt64/include/_mingw_secapi.h \
- C:/msys64/ucrt64/include/vadefs.h \
- C:/msys64/ucrt64/include/sdks/_mingw_ddk.h \
+ C:/msys64/ucrt64/include/sys/types.h \
  C:/msys64/ucrt64/include/_mingw_off_t.h C:/msys64/ucrt64/include/stdio.h \
  C:/msys64/ucrt64/include/corecrt_stdio_config.h \
  C:/msys64/ucrt64/include/swprintf.inl \
  C:/msys64/ucrt64/include/sec_api/stdio_s.h \
  C:/msys64/ucrt64/include/c++/14.2.0/stdlib.h \
  C:/msys64/ucrt64/include/c++/14.2.0/cstdlib \
- C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
- C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/os_defines.h \
- C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/cpu_defines.h \
- C:/msys64/ucrt64/include/c++/14.2.0/pstl/pstl_config.h \
  C:/msys64/ucrt64/include/stdlib.h \
  C:/msys64/ucrt64/include/corecrt_wstdlib.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h \
@@ -34,8 +38,6 @@ src/CMakeFiles/DigiviceSim.dir/platform/pc/pc_display.cpp.obj: \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
  C:/msys64/ucrt64/include/errno.h \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/std_abs.h \
- C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \
- C:/msys64/ucrt64/include/stddef.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
  C:/msys64/ucrt64/include/stdarg.h \
  C:/msys64/ucrt64/include/_mingw_stdarg.h \
@@ -45,9 +47,7 @@ src/CMakeFiles/DigiviceSim.dir/platform/pc/pc_display.cpp.obj: \
  C:/msys64/ucrt64/include/corecrt_wctype.h \
  C:/msys64/ucrt64/include/_mingw_stat64.h \
  C:/msys64/ucrt64/include/sec_api/wchar_s.h \
- C:/msys64/ucrt64/include/inttypes.h \
- C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
- C:/msys64/ucrt64/include/stdint.h C:/msys64/ucrt64/include/ctype.h \
+ C:/msys64/ucrt64/include/inttypes.h C:/msys64/ucrt64/include/ctype.h \
  C:/msys64/ucrt64/include/c++/14.2.0/math.h \
  C:/msys64/ucrt64/include/c++/14.2.0/cmath \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/requires_hosted.h \
@@ -240,8 +240,7 @@ src/CMakeFiles/DigiviceSim.dir/platform/pc/pc_display.cpp.obj: \
  C:/msys64/ucrt64/include/SDL2/SDL_timer.h \
  C:/msys64/ucrt64/include/SDL2/SDL_version.h \
  C:/msys64/ucrt64/include/SDL2/SDL_locale.h \
- C:/msys64/ucrt64/include/SDL2/SDL_misc.h Z:/Digivice/src/hal/idisplay.h \
- C:/msys64/ucrt64/include/c++/14.2.0/cstdint \
+ C:/msys64/ucrt64/include/SDL2/SDL_misc.h \
  C:/msys64/ucrt64/include/SDL2/SDL_log.h \
  C:/msys64/ucrt64/include/c++/14.2.0/iostream \
  C:/msys64/ucrt64/include/c++/14.2.0/ostream \
