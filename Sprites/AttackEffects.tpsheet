@@ -1,0 +1,33 @@
+{
+	"textures": [
+		{
+			"image": "AttackEffects-0.png",
+			"size": {
+				"w": 1920,
+				"h": 640
+			},
+			"sprites": [
+				{
+					"filename": "1511_5_0.png",
+					"region": {
+						"x": 0,
+						"y": 0,
+						"w": 1920,
+						"h": 640
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:c70f22f179d2f5aaef94323bc08b1c4c:a26591fe629f16279524f3f73190d7e6:c4cad5c3ece0111adddf1430769e5c45$"
+	}
+}

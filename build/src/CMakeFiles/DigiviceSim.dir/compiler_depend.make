@@ -101,6 +101,7 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:/Digivice/src/main.cpp \
   C:/msys64/ucrt64/include/c++/14.2.0/cstddef \
   C:/msys64/ucrt64/include/c++/14.2.0/cstdint \
   C:/msys64/ucrt64/include/c++/14.2.0/cstdlib \
+  C:/msys64/ucrt64/include/c++/14.2.0/cstring \
   C:/msys64/ucrt64/include/c++/14.2.0/debug/assertions.h \
   C:/msys64/ucrt64/include/c++/14.2.0/debug/debug.h \
   C:/msys64/ucrt64/include/c++/14.2.0/ext/alloc_traits.h \
@@ -308,7 +309,7 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:/Digivice/src/main.cpp \
   Z:/Digivice/assets/Tentomon_Idle_1.h \
   Z:/Digivice/assets/Tentomon_Walk_0.h \
   Z:/Digivice/assets/Tentomon_Walk_1.h \
-  Z:/Digivice/assets/bg_layer0_png.h \
+  Z:/Digivice/assets/castlebackground1.h \
   Z:/Digivice/src/hal/idisplay.h \
   Z:/Digivice/src/animation.h \
   Z:/Digivice/src/platform/pc/pc_display.h
@@ -970,6 +971,10 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/char_traits.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/cstddef:
 
+C:/msys64/ucrt64/include/c++/14.2.0/bits/ostream_insert.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/cstring:
+
 C:/msys64/ucrt64/include/c++/14.2.0/debug/assertions.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/debug/debug.h:
@@ -997,6 +1002,8 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/math.h:
+
+Z:/Digivice/assets/castlebackground1.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/float.h:
 
@@ -1342,8 +1349,6 @@ Z:/Digivice/assets/Tentomon_Idle_1.h:
 
 Z:/Digivice/assets/Tentomon_Walk_0.h:
 
-Z:/Digivice/assets/bg_layer0_png.h:
-
 Z:/Digivice/src/hal/idisplay.h:
 
 Z:/Digivice/src/animation.h:
@@ -1367,8 +1372,6 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/locale_facets.h:
 C:/msys64/ucrt64/include/c++/14.2.0/bits/localefwd.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/ostream.tcc:
-
-C:/msys64/ucrt64/include/c++/14.2.0/bits/ostream_insert.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/postypes.h:
 

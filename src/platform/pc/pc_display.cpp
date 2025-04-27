@@ -22,6 +22,7 @@ bool PCDisplay::init(const char* title, int width, int height) {
     // --- Add Hint BEFORE CreateRenderer if testing software rendering ---
     // SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
     // ---
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); // Use nearest pixel sampling
     renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer_ == nullptr) { /*...*/ return false; }
     SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "PCDisplay initialized successfully.");

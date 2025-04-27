@@ -102,6 +102,7 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj
  C:/msys64/ucrt64/include/c++/14.2.0/cstddef
  C:/msys64/ucrt64/include/c++/14.2.0/cstdint
  C:/msys64/ucrt64/include/c++/14.2.0/cstdlib
+ C:/msys64/ucrt64/include/c++/14.2.0/cstring
  C:/msys64/ucrt64/include/c++/14.2.0/debug/assertions.h
  C:/msys64/ucrt64/include/c++/14.2.0/debug/debug.h
  C:/msys64/ucrt64/include/c++/14.2.0/ext/alloc_traits.h
@@ -309,7 +310,7 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj
  Z:/Digivice/assets/Tentomon_Idle_1.h
  Z:/Digivice/assets/Tentomon_Walk_0.h
  Z:/Digivice/assets/Tentomon_Walk_1.h
- Z:/Digivice/assets/bg_layer0_png.h
+ Z:/Digivice/assets/castlebackground1.h
  Z:/Digivice/src/hal/idisplay.h
  Z:/Digivice/src/animation.h
  Z:/Digivice/src/platform/pc/pc_display.h
