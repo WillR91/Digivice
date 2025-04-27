@@ -276,11 +276,39 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:/Digivice/src/main.cpp \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveoptintrin.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavesintrin.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h \
-  Z:/Digivice/assets/TaiTest2_0.h \
-  Z:/Digivice/assets/TaiTest_0.h \
+  Z:/Digivice/assets/Agumon_Idle_0.h \
+  Z:/Digivice/assets/Agumon_Idle_1.h \
+  Z:/Digivice/assets/Agumon_Walk_0.h \
+  Z:/Digivice/assets/Agumon_Walk_1.h \
+  Z:/Digivice/assets/Biyomon_Idle_0.h \
+  Z:/Digivice/assets/Biyomon_Idle_1.h \
+  Z:/Digivice/assets/Biyomon_Walk_0.h \
+  Z:/Digivice/assets/Biyomon_Walk_1.h \
+  Z:/Digivice/assets/Gabumon_Idle_0.h \
+  Z:/Digivice/assets/Gabumon_Idle_1.h \
+  Z:/Digivice/assets/Gabumon_Walk_0.h \
+  Z:/Digivice/assets/Gabumon_Walk_1.h \
+  Z:/Digivice/assets/Gatomon_Idle_0.h \
+  Z:/Digivice/assets/Gatomon_Idle_1.h \
+  Z:/Digivice/assets/Gatomon_Walk_0.h \
+  Z:/Digivice/assets/Gatomon_Walk_1.h \
+  Z:/Digivice/assets/Gomamon_Idle_0.h \
+  Z:/Digivice/assets/Gomamon_Idle_1.h \
+  Z:/Digivice/assets/Gomamon_Walk_0.h \
+  Z:/Digivice/assets/Gomamon_Walk_1.h \
+  Z:/Digivice/assets/Palmon_Idle_0.h \
+  Z:/Digivice/assets/Palmon_Idle_1.h \
+  Z:/Digivice/assets/Palmon_Walk_0.h \
+  Z:/Digivice/assets/Palmon_Walk_1.h \
+  Z:/Digivice/assets/Patamon_Idle_0.h \
+  Z:/Digivice/assets/Patamon_Idle_1.h \
+  Z:/Digivice/assets/Patamon_Walk_0.h \
+  Z:/Digivice/assets/Patamon_Walk_1.h \
+  Z:/Digivice/assets/Tentomon_Idle_0.h \
+  Z:/Digivice/assets/Tentomon_Idle_1.h \
+  Z:/Digivice/assets/Tentomon_Walk_0.h \
+  Z:/Digivice/assets/Tentomon_Walk_1.h \
   Z:/Digivice/assets/bg_layer0_png.h \
-  Z:/Digivice/assets/walk_frame_0.h \
-  Z:/Digivice/assets/walk_frame_1.h \
   Z:/Digivice/src/hal/idisplay.h \
   Z:/Digivice/src/animation.h \
   Z:/Digivice/src/platform/pc/pc_display.h
@@ -672,6 +700,8 @@ C:/msys64/ucrt64/include/SDL2/SDL_assert.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_atomic.h:
 
+Z:/Digivice/assets/Patamon_Walk_0.h:
+
 C:/msys64/ucrt64/include/SDL2/SDL_blendmode.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/exception.h:
@@ -679,6 +709,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/exception.h:
 C:/msys64/ucrt64/include/pthread_unistd.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_log.h:
+
+Z:/Digivice/assets/Gatomon_Walk_1.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_cpuinfo.h:
 
@@ -717,6 +749,8 @@ C:/msys64/ucrt64/include/SDL2/SDL_gesture.h:
 C:/msys64/ucrt64/include/SDL2/SDL_rwops.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_guid.h:
+
+Z:/Digivice/assets/Tentomon_Walk_1.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_haptic.h:
 
@@ -782,6 +816,8 @@ C:/msys64/ucrt64/include/SDL2/SDL_thread.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_render.h:
 
+Z:/Digivice/assets/Palmon_Walk_1.h:
+
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/fmaintrin.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_scancode.h:
@@ -830,6 +866,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/alloc_traits.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/concept_check.h:
 
+Z:/Digivice/assets/Agumon_Idle_1.h:
+
 C:/msys64/ucrt64/include/c++/14.2.0/cstdint:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/exception_defines.h:
@@ -849,6 +887,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/move.h:
 C:/msys64/ucrt64/include/c++/14.2.0/bits/new_allocator.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/predefined_ops.h:
+
+Z:/Digivice/assets/Patamon_Idle_0.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/ptr_traits.h:
 
@@ -886,17 +926,23 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_bvector.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/nested_exception.h:
 
+Z:/Digivice/assets/Gomamon_Walk_0.h:
+
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_construct.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator_base_funcs.h:
 
+Z:/Digivice/assets/Gabumon_Idle_1.h:
+
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/rtmintrin.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator_base_types.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_pair.h:
+
+Z:/Digivice/assets/Agumon_Walk_1.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx5124fmapsintrin.h:
 
@@ -972,8 +1018,6 @@ C:/msys64/ucrt64/include/c++/14.2.0/tr1/ell_integral.tcc:
 
 C:/msys64/ucrt64/include/c++/14.2.0/tr1/exp_integral.tcc:
 
-Z:/Digivice/assets/walk_frame_0.h:
-
 C:/msys64/ucrt64/include/c++/14.2.0/tr1/gamma.tcc:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniint8intrin.h:
@@ -995,6 +1039,8 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clflushoptintrin.h:
 C:/msys64/ucrt64/include/c++/14.2.0/tuple:
 
 C:/msys64/ucrt64/include/c++/14.2.0/type_traits:
+
+Z:/Digivice/assets/Tentomon_Idle_0.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h:
 
@@ -1020,6 +1066,8 @@ C:/msys64/ucrt64/include/corecrt_wstdlib.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/exception:
 
+Z:/Digivice/assets/Gomamon_Idle_0.h:
+
 C:/msys64/ucrt64/include/crtdefs.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h:
@@ -1031,8 +1079,6 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/prfchwintrin.h:
 C:/msys64/ucrt64/include/errno.h:
 
 C:/msys64/ucrt64/include/float.h:
-
-Z:/Digivice/assets/TaiTest2_0.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/serializeintrin.h:
 
@@ -1055,6 +1101,8 @@ C:/msys64/ucrt64/include/process.h:
 C:/msys64/ucrt64/include/sdks/_mingw_ddk.h:
 
 C:/msys64/ucrt64/include/sec_api/stdlib_s.h:
+
+Z:/Digivice/assets/Agumon_Idle_0.h:
 
 C:/msys64/ucrt64/include/sec_api/wchar_s.h:
 
@@ -1097,6 +1145,8 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h:
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx2intrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bf16intrin.h:
+
+Z:/Digivice/assets/Patamon_Idle_1.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512bitalgintrin.h:
 
@@ -1200,6 +1250,8 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/lzcntintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm3dnow.h:
 
+Z:/Digivice/assets/Gabumon_Idle_0.h:
+
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/movdirintrin.h:
@@ -1230,6 +1282,8 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/usermsrintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/vaesintrin.h:
 
+Z:/Digivice/assets/Patamon_Walk_1.h:
+
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/vpclmulqdqintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wbnoinvdintrin.h:
@@ -1246,21 +1300,53 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveintrin.h:
 
+Z:/Digivice/assets/Biyomon_Idle_0.h:
+
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveoptintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavesintrin.h:
 
-Z:/Digivice/assets/TaiTest_0.h:
+Z:/Digivice/assets/Agumon_Walk_0.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/bits/cxxabi_init_exception.h:
+
+Z:/Digivice/assets/Biyomon_Idle_1.h:
+
+Z:/Digivice/assets/Biyomon_Walk_0.h:
+
+Z:/Digivice/assets/Biyomon_Walk_1.h:
+
+Z:/Digivice/src/platform/pc/pc_display.cpp:
+
+Z:/Digivice/assets/Gabumon_Walk_0.h:
+
+Z:/Digivice/assets/Gabumon_Walk_1.h:
+
+Z:/Digivice/assets/Gatomon_Idle_0.h:
+
+Z:/Digivice/assets/Gatomon_Idle_1.h:
+
+Z:/Digivice/assets/Gatomon_Walk_0.h:
+
+Z:/Digivice/assets/Gomamon_Idle_1.h:
+
+Z:/Digivice/assets/Gomamon_Walk_1.h:
+
+Z:/Digivice/assets/Palmon_Idle_0.h:
+
+Z:/Digivice/assets/Palmon_Idle_1.h:
+
+Z:/Digivice/assets/Palmon_Walk_0.h:
+
+Z:/Digivice/assets/Tentomon_Idle_1.h:
+
+Z:/Digivice/assets/Tentomon_Walk_0.h:
 
 Z:/Digivice/assets/bg_layer0_png.h:
-
-Z:/Digivice/assets/walk_frame_1.h:
 
 Z:/Digivice/src/hal/idisplay.h:
 
 Z:/Digivice/src/animation.h:
-
-Z:/Digivice/src/platform/pc/pc_display.cpp:
 
 C:/msys64/ucrt64/include/_timeval.h:
 
@@ -1269,8 +1355,6 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/basic_ios.tcc:
 C:/msys64/ucrt64/include/c++/14.2.0/ext/string_conversions.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/charconv.h:
-
-C:/msys64/ucrt64/include/c++/14.2.0/bits/cxxabi_init_exception.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/exception_ptr.h:
 

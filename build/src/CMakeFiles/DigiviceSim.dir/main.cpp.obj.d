@@ -266,7 +266,23 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:\Digivice\src\main.cpp \
  C:/msys64/ucrt64/include/c++/14.2.0/cstddef \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator.h \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator_args.h \
- C:/msys64/ucrt64/include/c++/14.2.0/tuple Z:/Digivice/assets/TaiTest_0.h \
- Z:/Digivice/assets/TaiTest2_0.h Z:/Digivice/assets/walk_frame_0.h \
- Z:/Digivice/assets/walk_frame_1.h Z:/Digivice/assets/bg_layer0_png.h \
+ C:/msys64/ucrt64/include/c++/14.2.0/tuple \
+ Z:/Digivice/assets/Agumon_Idle_0.h Z:/Digivice/assets/Agumon_Idle_1.h \
+ Z:/Digivice/assets/Agumon_Walk_0.h Z:/Digivice/assets/Agumon_Walk_1.h \
+ Z:/Digivice/assets/Gabumon_Idle_0.h Z:/Digivice/assets/Gabumon_Idle_1.h \
+ Z:/Digivice/assets/Gabumon_Walk_0.h Z:/Digivice/assets/Gabumon_Walk_1.h \
+ Z:/Digivice/assets/Biyomon_Idle_0.h Z:/Digivice/assets/Biyomon_Idle_1.h \
+ Z:/Digivice/assets/Biyomon_Walk_0.h Z:/Digivice/assets/Biyomon_Walk_1.h \
+ Z:/Digivice/assets/Gatomon_Idle_0.h Z:/Digivice/assets/Gatomon_Idle_1.h \
+ Z:/Digivice/assets/Gatomon_Walk_0.h Z:/Digivice/assets/Gatomon_Walk_1.h \
+ Z:/Digivice/assets/Gomamon_Idle_0.h Z:/Digivice/assets/Gomamon_Idle_1.h \
+ Z:/Digivice/assets/Gomamon_Walk_0.h Z:/Digivice/assets/Gomamon_Walk_1.h \
+ Z:/Digivice/assets/Palmon_Idle_0.h Z:/Digivice/assets/Palmon_Idle_1.h \
+ Z:/Digivice/assets/Palmon_Walk_0.h Z:/Digivice/assets/Palmon_Walk_1.h \
+ Z:/Digivice/assets/Tentomon_Idle_0.h \
+ Z:/Digivice/assets/Tentomon_Idle_1.h \
+ Z:/Digivice/assets/Tentomon_Walk_0.h \
+ Z:/Digivice/assets/Tentomon_Walk_1.h Z:/Digivice/assets/Patamon_Idle_0.h \
+ Z:/Digivice/assets/Patamon_Idle_1.h Z:/Digivice/assets/Patamon_Walk_0.h \
+ Z:/Digivice/assets/Patamon_Walk_1.h Z:/Digivice/assets/bg_layer0_png.h \
  C:/msys64/ucrt64/include/SDL2/SDL_log.h
