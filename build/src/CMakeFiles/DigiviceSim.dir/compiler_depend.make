@@ -309,7 +309,9 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:/Digivice/src/main.cpp \
   Z:/Digivice/assets/Tentomon_Idle_1.h \
   Z:/Digivice/assets/Tentomon_Walk_0.h \
   Z:/Digivice/assets/Tentomon_Walk_1.h \
+  Z:/Digivice/assets/castlebackground0.h \
   Z:/Digivice/assets/castlebackground1.h \
+  Z:/Digivice/assets/castlebackground2.h \
   Z:/Digivice/src/hal/idisplay.h \
   Z:/Digivice/src/animation.h \
   Z:/Digivice/src/platform/pc/pc_display.h
@@ -746,6 +748,8 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/hresetintrin.h:
 C:/msys64/ucrt64/include/SDL2/SDL_platform.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_gesture.h:
+
+Z:/Digivice/assets/castlebackground2.h:
 
 C:/msys64/ucrt64/include/SDL2/SDL_rwops.h:
 
@@ -1348,6 +1352,8 @@ Z:/Digivice/assets/Palmon_Walk_0.h:
 Z:/Digivice/assets/Tentomon_Idle_1.h:
 
 Z:/Digivice/assets/Tentomon_Walk_0.h:
+
+Z:/Digivice/assets/castlebackground0.h:
 
 Z:/Digivice/src/hal/idisplay.h:
 

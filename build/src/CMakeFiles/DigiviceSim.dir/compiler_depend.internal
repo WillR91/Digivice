@@ -310,7 +310,9 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj
  Z:/Digivice/assets/Tentomon_Idle_1.h
  Z:/Digivice/assets/Tentomon_Walk_0.h
  Z:/Digivice/assets/Tentomon_Walk_1.h
+ Z:/Digivice/assets/castlebackground0.h
  Z:/Digivice/assets/castlebackground1.h
+ Z:/Digivice/assets/castlebackground2.h
  Z:/Digivice/src/hal/idisplay.h
  Z:/Digivice/src/animation.h
  Z:/Digivice/src/platform/pc/pc_display.h

@@ -285,6 +285,8 @@ src/CMakeFiles/DigiviceSim.dir/main.cpp.obj: Z:\Digivice\src\main.cpp \
  Z:/Digivice/assets/Tentomon_Walk_1.h Z:/Digivice/assets/Patamon_Idle_0.h \
  Z:/Digivice/assets/Patamon_Idle_1.h Z:/Digivice/assets/Patamon_Walk_0.h \
  Z:/Digivice/assets/Patamon_Walk_1.h \
+ Z:/Digivice/assets/castlebackground0.h \
  Z:/Digivice/assets/castlebackground1.h \
+ Z:/Digivice/assets/castlebackground2.h \
  C:/msys64/ucrt64/include/SDL2/SDL_log.h \
  C:/msys64/ucrt64/include/c++/14.2.0/cstring

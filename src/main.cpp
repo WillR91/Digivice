@@ -1,12 +1,14 @@
 // ===============================================================================
-// Full code for src/main.cpp - Implementing Overlapping Tile Scrolling
-// Asset is assumed to be a single tile (NOW SCALED 3.7x from 384x128).
-// Original: 384x128, Old Scale: 3x (1152x384), New Scale: 3.7x (1421x474 calculated)
-// Scrolling achieved by drawing two instances of the tile, offset by
-// an effective width (NOW 947, calculated as 1421 * 2/3), and clipping to the window.
-// Scroll offset wraps around EFFECTIVE width (947).
-// Using castlebackground1.h (ASSUMED UPDATED to 1421x474 dimensions & data)
-// and ALL 8 Digimon.
+// Full code for src/main.cpp - Implementing 3-Layer Parallax Scrolling
+// Assets: castlebackground0 (Foreground), castlebackground1 (Middleground),
+//         castlebackground2 (Background).
+// Assumed Orig Size: 384x128 each, Scaled: 3.7x (1421x474 each calculated).
+// Scrolling uses overlapping tiles, offset by effective width (947 calculated),
+// with individual scroll speeds for parallax.
+// Character drawn BETWEEN Layer 1 and Layer 0.
+// Foreground scroll speed increased.
+// All headers assumed updated (1421x474 dimensions & data).
+// Uses ALL 8 Digimon.
 // ===============================================================================
 
 #include "platform/pc/pc_display.h"
@@ -14,7 +16,7 @@
 
 // --- Includes for Assets ---
 
-// Digimon Assets
+// Digimon Assets (Unchanged)
 #include "Agumon_Idle_0.h"
 #include "Agumon_Idle_1.h"
 #include "Agumon_Walk_0.h"
@@ -48,13 +50,14 @@
 #include "Patamon_Walk_0.h"
 #include "Patamon_Walk_1.h"
 
-
-// Background Asset Header
+// Background Asset Headers
 // !!! CRITICAL DEPENDENCY !!!
-// This header file MUST be updated/regenerated to contain the pixel data
-// for the background image scaled by 3.7x, AND define the correct
-// dimensions (CASTLEBACKGROUND1_WIDTH = 1421, CASTLEBACKGROUND1_HEIGHT = 474).
-#include "castlebackground1.h"
+// These header files MUST be updated/regenerated to contain the pixel data
+// for the background images scaled by 3.7x, AND define the correct
+// dimensions (e.g., CASTLEBACKGROUND*_WIDTH = 1421, CASTLEBACKGROUND*_HEIGHT = 474).
+#include "castlebackground0.h" // <<< Foreground Layer
+#include "castlebackground1.h" // <<< Middleground Layer (Existing)
+#include "castlebackground2.h" // <<< Background Layer
 
 // Standard / SDL Includes
 #include <SDL2/SDL.h>
@@ -62,41 +65,40 @@
 #include <vector>
 #include <cmath>
 #include <limits>
-#include <cstring> // For memcmp if needed elsewhere, not needed for current drawing
+#include <cstring>
 #include <stdint.h> // For uint16_t
 
 // --- Window Dimensions ---
-// Keep these the same unless the window size itself needs to change
 const int WINDOW_WIDTH = 466;
 const int WINDOW_HEIGHT = 466;
 
 // --- Game Constants ---
 const int MAX_QUEUED_STEPS = 2;
-// Adjust scroll speed if desired, independent of background size changes
-const float WALK_SCROLL_PIXELS_PER_FRAME = 1.5f;
 
-// --- Background Constants (Overlapping Tile Method) ---
-// ** NEW VALUES BASED ON 3.7x SCALING of 384x128 **
-// Calculated New Dimensions: Width = 384*3.7 = 1420.8 -> 1421 ; Height = 128*3.7 = 473.6 -> 474
+// --- Background Constants (Parallax Layers) ---
+// ** VALUES BASED ON 3.7x SCALING of 384x128 for ALL layers **
+// Calculated Scaled Dimensions: Width = 1421 px, Height = 474 px
 
-// These constants read directly from the header file.
-// ** THEY RELY ON castlebackground1.h BEING CORRECTLY UPDATED! **
-const int TILE_WIDTH = CASTLEBACKGROUND1_WIDTH;           // Width of the NEW background asset tile (EXPECTING 1421)
-const int TILE_HEIGHT = CASTLEBACKGROUND1_HEIGHT;         // Height of the NEW background asset tile (EXPECTING 474)
+// Layer 0: Foreground (Fastest Scroll)
+const int TILE_WIDTH_0 = CASTLEBACKGROUND0_WIDTH;   // Expecting 1421 from header
+const int TILE_HEIGHT_0 = CASTLEBACKGROUND0_HEIGHT; // Expecting 474 from header
+const int EFFECTIVE_BG_WIDTH_0 = 947;               // <<< ADJUST if TILE_WIDTH_0 is different (1421 * 2/3)
+const float effectiveW_float_0 = static_cast<float>(EFFECTIVE_BG_WIDTH_0);
+const float SCROLL_SPEED_0 = 3.0f;                  // <<< Speed for Layer 0 (INCREASED)
 
-// CRITICAL ASSUMPTION: The effective distance for seamless looping by overlap
-// Maintain the original ratio (OldEffective/OldWidth = 768 / (384*3) = 768 / 1152 = 2/3)
-// with the new scaled width read from the header.
-// New Effective Width = New Tile Width * (2/3) = CASTLEBACKGROUND1_WIDTH * (2.0 / 3.0)
-// Example Calculation: 1421 * (2.0 / 3.0) = 947.333... -> Rounded to 947
-const int EFFECTIVE_BG_WIDTH = 947; // <<< HARDCODED based on 1421 * (2/3), ADJUST if 1421 changes
-// Alternative (Calculated at runtime, less optimal but safer if header width might change slightly):
-// const int EFFECTIVE_BG_WIDTH = static_cast<int>(std::round(static_cast<float>(TILE_WIDTH) * (2.0f / 3.0f)));
+// Layer 1: Middleground (Medium Scroll)
+const int TILE_WIDTH_1 = CASTLEBACKGROUND1_WIDTH;   // Expecting 1421 from header
+const int TILE_HEIGHT_1 = CASTLEBACKGROUND1_HEIGHT; // Expecting 474 from header
+const int EFFECTIVE_BG_WIDTH_1 = 947;               // <<< ADJUST if TILE_WIDTH_1 is different (1421 * 2/3)
+const float effectiveW_float_1 = static_cast<float>(EFFECTIVE_BG_WIDTH_1);
+const float SCROLL_SPEED_1 = 1.0f;                  // <<< Speed for Layer 1
 
-const float effectiveW_float = static_cast<float>(EFFECTIVE_BG_WIDTH); // Float version for wrapping (NOW ~947.0f)
-
-// Implied overlap (for reference) = TILE_WIDTH - EFFECTIVE_BG_WIDTH
-// e.g., 1421 - 947 = 474
+// Layer 2: Background (Slowest Scroll)
+const int TILE_WIDTH_2 = CASTLEBACKGROUND2_WIDTH;   // Expecting 1421 from header
+const int TILE_HEIGHT_2 = CASTLEBACKGROUND2_HEIGHT; // Expecting 474 from header
+const int EFFECTIVE_BG_WIDTH_2 = 947;               // <<< ADJUST if TILE_WIDTH_2 is different (1421 * 2/3)
+const float effectiveW_float_2 = static_cast<float>(EFFECTIVE_BG_WIDTH_2);
+const float SCROLL_SPEED_2 = 0.5f;                  // <<< Speed for Layer 2
 
 // --- Game Enums ---
 enum PlayerState { STATE_IDLE, STATE_WALKING };
@@ -107,44 +109,52 @@ enum DigimonType { DIGI_AGUMON, DIGI_GABUMON, DIGI_BIYOMON, DIGI_GATOMON, DIGI_G
 // ==========================================================================
 int main(int argc, char* argv[]) {
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_DEBUG);
-    SDL_Log("--- Starting Digivice Sim (Overlapping Tile Scroll - 3.7x Scale) ---");
-    SDL_Log("Background Asset: castlebackground1");
-    SDL_Log("Expected Tile Dimensions (WxH): %d x %d", 1421, 474); // Log expected values based on calculation
-    SDL_Log("Actual Dimensions from Header (WxH): %d x %d", TILE_WIDTH, TILE_HEIGHT); // Log actual values from header constant
-    SDL_Log("Effective Scroll Width (Wrap distance): %d", EFFECTIVE_BG_WIDTH);
-    SDL_Log("Scroll Offset Wrap Method: Using EFFECTIVE Width (%d)", EFFECTIVE_BG_WIDTH);
-    SDL_Log("Drawing Method: Manual Overlapping Blit with Clipping");
+    SDL_Log("--- Starting Digivice Sim (3-Layer Parallax Scroll - 3.7x Scale v2) ---");
+    SDL_Log("Background Assets: castlebackground0, castlebackground1, castlebackground2");
+    SDL_Log("Drawing Order: BG(2) -> MG(1) -> Character -> FG(0)"); // Log new order
+    SDL_Log("Expected Tile Dimensions (WxH) for all layers: %d x %d", 1421, 474); // Log expected values
+    SDL_Log("Actual Dimensions Layer 0 (WxH): %d x %d", TILE_WIDTH_0, TILE_HEIGHT_0);
+    SDL_Log("Actual Dimensions Layer 1 (WxH): %d x %d", TILE_WIDTH_1, TILE_HEIGHT_1);
+    SDL_Log("Actual Dimensions Layer 2 (WxH): %d x %d", TILE_WIDTH_2, TILE_HEIGHT_2);
+    SDL_Log("Effective Scroll Widths (0, 1, 2): %d, %d, %d", EFFECTIVE_BG_WIDTH_0, EFFECTIVE_BG_WIDTH_1, EFFECTIVE_BG_WIDTH_2);
+    SDL_Log("Scroll Speeds (0, 1, 2): %.2f, %.2f, %.2f", SCROLL_SPEED_0, SCROLL_SPEED_1, SCROLL_SPEED_2); // Log new speeds
 
+    // --- Sanity Checks --- (Unchanged)
+    auto checkLayer = [](int layerNum, int width, int height, int effectiveWidth) {
+        if (width <= 0 || height <= 0) {
+             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error: Invalid tile dimensions for Layer %d from header (W:%d H:%d)", layerNum, width, height);
+             return false;
+        }
+        if (effectiveWidth <= 0 || effectiveWidth > width) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error: Effective BG Width (%d) is invalid for Layer %d Tile Width (%d)", effectiveWidth, layerNum, width);
+             float actual_effective_w = static_cast<float>(width) * (2.0f / 3.0f);
+             SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Consider using effective width: %d based on actual tile width for Layer %d", static_cast<int>(std::round(actual_effective_w)), layerNum);
+            return false;
+        }
+         if (width != 1421 || height != 474) {
+              SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Warning: Expected dims (1421x474) differ from header dims for Layer %d (%dx%d)!", layerNum, width, height);
+         }
+         return true;
+    };
 
-    // --- Sanity Checks ---
-    // Check against the constants derived from the header directly
-    if (TILE_WIDTH <= 0 || TILE_HEIGHT <= 0) {
-         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error: Invalid background tile dimensions from header (W:%d H:%d)", TILE_WIDTH, TILE_HEIGHT);
-         return 1;
-    }
-     // Check the *calculated* effective width against the actual tile width from header
-     if (EFFECTIVE_BG_WIDTH <= 0 || EFFECTIVE_BG_WIDTH > TILE_WIDTH) {
-         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error: Effective BG Width (%d) is invalid for Tile Width from header (%d)", EFFECTIVE_BG_WIDTH, TILE_WIDTH);
-         // Optional: Suggest recalculation based on actual header width if there's a mismatch
-         float actual_effective_w = static_cast<float>(TILE_WIDTH) * (2.0f / 3.0f);
-         SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Consider using effective width: %d based on actual tile width", static_cast<int>(std::round(actual_effective_w)));
-         return 1; // Or handle differently
-     }
+    bool config_ok = true;
+    config_ok &= checkLayer(0, TILE_WIDTH_0, TILE_HEIGHT_0, EFFECTIVE_BG_WIDTH_0);
+    config_ok &= checkLayer(1, TILE_WIDTH_1, TILE_HEIGHT_1, EFFECTIVE_BG_WIDTH_1);
+    config_ok &= checkLayer(2, TILE_WIDTH_2, TILE_HEIGHT_2, EFFECTIVE_BG_WIDTH_2);
+
      if (WINDOW_WIDTH <= 0 || WINDOW_HEIGHT <= 0) {
           SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error: Invalid window dimensions (W:%d H:%d)", WINDOW_WIDTH, WINDOW_HEIGHT);
-          return 1;
+          config_ok = false;
      }
-     // Additional Sanity Check: Compare expected calculation vs actual dimensions from header
-     if (TILE_WIDTH != 1421 || TILE_HEIGHT != 474) {
-          SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Warning: Expected tile dimensions (1421x474) differ from header dimensions (%dx%d)! Using header values.", TILE_WIDTH, TILE_HEIGHT);
-          // This might indicate an issue with the header generation or the hardcoded EFFECTIVE_BG_WIDTH calculation
+     if (!config_ok) {
+         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Configuration errors found. Exiting.");
+         return 1;
      }
      // --- End Sanity Checks ---
 
 
     PCDisplay display;
-    // Use a slightly different window title to confirm the new code is running
-    if (!display.init("Digivice Sim - Castle Scroll (3.7x Scale Test)", WINDOW_WIDTH, WINDOW_HEIGHT)) {
+    if (!display.init("Digivice Sim - Parallax Scroll v2", WINDOW_WIDTH, WINDOW_HEIGHT)) {
          SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Display initialization failed!");
          return 1;
     }
@@ -221,14 +231,17 @@ int main(int argc, char* argv[]) {
     patamon_walk_anim.addFrame(patamon_walk_0_sf, 300); patamon_walk_anim.addFrame(patamon_walk_1_sf, 300); patamon_walk_anim.addFrame(patamon_walk_0_sf, 300); patamon_walk_anim.addFrame(patamon_walk_1_sf, 300); patamon_walk_anim.loops = false;
 
 
-    // --- Background Data ---
-    // This pointer now points to the (assumed) larger data array from the updated header
-    const uint16_t* bg_data = castlebackground1_data;
-    // Scroll offset now wraps within the NEW EFFECTIVE width [0, EFFECTIVE_BG_WIDTH)
-    float bg_scroll_offset = 0.0f;
+    // --- Background Data Pointers --- (Unchanged)
+    const uint16_t* bg_data_0 = castlebackground0_data; // Foreground
+    const uint16_t* bg_data_1 = castlebackground1_data; // Middleground
+    const uint16_t* bg_data_2 = castlebackground2_data; // Background
 
-    // --- Game State Variables ---
-    // (These remain unchanged)
+    // --- Background Scroll State --- (Unchanged)
+    float bg_scroll_offset_0 = 0.0f;
+    float bg_scroll_offset_1 = 0.0f;
+    float bg_scroll_offset_2 = 0.0f;
+
+    // --- Game State Variables --- (Unchanged)
     bool quit = false;
     SDL_Event e;
     DigimonType current_digimon = DIGI_AGUMON;
@@ -245,15 +258,13 @@ int main(int argc, char* argv[]) {
     while (!quit) {
         Uint32 current_time = SDL_GetTicks();
 
-        // --- Handle Input ---
-        // (Input handling logic remains unchanged)
+        // --- Handle Input --- (Unchanged)
         bool character_changed_this_frame = false;
         while (SDL_PollEvent(&e) != 0) {
              if (e.type == SDL_QUIT) { quit = true; }
              if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
                  if (e.key.keysym.sym == SDLK_SPACE) {
-                     if (queued_steps < MAX_QUEUED_STEPS) { queued_steps++; /* SDL_Log("Step Queued (%d total)", queued_steps); */ } // Quieter log
-                     else { /* SDL_Log("Step queue full (%d). Input ignored.", queued_steps); */ } // Quieter log
+                     if (queued_steps < MAX_QUEUED_STEPS) { queued_steps++; }
                  } else if (e.key.keysym.sym >= SDLK_1 && e.key.keysym.sym <= SDLK_8) {
                      int key_num = e.key.keysym.sym - SDLK_1;
                      if (key_num < DIGI_COUNT) {
@@ -265,26 +276,29 @@ int main(int argc, char* argv[]) {
                      }
                  } else if (e.key.keysym.sym == SDLK_ESCAPE) { quit = true; }
              }
-        } // End Input Polling
-
-
-        // --- Update Scrolling (ONLY when walking) ---
-        if (current_state == STATE_WALKING) {
-            bg_scroll_offset -= WALK_SCROLL_PIXELS_PER_FRAME; // Move left (speed constant)
-
-            // --- WRAPPING LOGIC using NEW EFFECTIVE_BG_WIDTH ---
-            // The logic itself doesn't change, but effectiveW_float now holds the new value (~947.0f)
-            while (bg_scroll_offset < 0.0f) {
-                bg_scroll_offset += effectiveW_float; // Wrap using the NEW effective width
-            }
-            // fmod is still suitable for wrapping
-            bg_scroll_offset = std::fmod(bg_scroll_offset, effectiveW_float); // Wrap using the NEW effective width
-            // --- END OF WRAPPING LOGIC ---
         }
 
 
-        // --- State & Animation Selection / Update ---
-        // (This logic remains unchanged)
+        // --- Update Parallax Scrolling (ONLY when walking) --- (Unchanged)
+        if (current_state == STATE_WALKING) {
+            // Update Layer 0 (Foreground) - Uses SCROLL_SPEED_0
+            bg_scroll_offset_0 -= SCROLL_SPEED_0;
+            while (bg_scroll_offset_0 < 0.0f) { bg_scroll_offset_0 += effectiveW_float_0; }
+            bg_scroll_offset_0 = std::fmod(bg_scroll_offset_0, effectiveW_float_0);
+
+            // Update Layer 1 (Middleground) - Uses SCROLL_SPEED_1
+            bg_scroll_offset_1 -= SCROLL_SPEED_1;
+            while (bg_scroll_offset_1 < 0.0f) { bg_scroll_offset_1 += effectiveW_float_1; }
+            bg_scroll_offset_1 = std::fmod(bg_scroll_offset_1, effectiveW_float_1);
+
+            // Update Layer 2 (Background) - Uses SCROLL_SPEED_2
+            bg_scroll_offset_2 -= SCROLL_SPEED_2;
+            while (bg_scroll_offset_2 < 0.0f) { bg_scroll_offset_2 += effectiveW_float_2; }
+            bg_scroll_offset_2 = std::fmod(bg_scroll_offset_2, effectiveW_float_2);
+        }
+
+
+        // --- State & Animation Selection / Update --- (Unchanged)
          bool animation_needs_reset = character_changed_this_frame;
          if (current_state == STATE_IDLE && queued_steps > 0) {
              current_state = STATE_WALKING; animation_needs_reset = true; SDL_Log("State changed to WALKING");
@@ -315,17 +329,16 @@ int main(int argc, char* argv[]) {
                     default:            active_anim = &agumon_walk_anim;
                  }
              }
-             current_anim_frame_idx = 0; last_anim_update_time = current_time; /* SDL_Log("Animation pointer updated and reset."); */ // Quieter log
+             current_anim_frame_idx = 0; last_anim_update_time = current_time;
          }
 
 
-        // --- Animation Frame Logic ---
-        // (This logic remains unchanged)
+        // --- Animation Frame Logic --- (Unchanged)
         bool animation_cycle_finished = false;
         if (active_anim && !active_anim->frames.empty() && !active_anim->frame_durations_ms.empty()) {
              if (current_anim_frame_idx >= active_anim->frames.size() || current_anim_frame_idx >= active_anim->frame_durations_ms.size()) {
                  SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Animation frame index out of bounds! Resetting."); current_anim_frame_idx = 0;
-                 if (active_anim->frames.empty() || active_anim->frame_durations_ms.empty()) { continue; } // Skip frame if reset needed and anim is empty
+                 if (active_anim->frames.empty() || active_anim->frame_durations_ms.empty()) { continue; }
              }
             Uint32 current_frame_duration = active_anim->frame_durations_ms[current_anim_frame_idx];
             if (current_time >= last_anim_update_time + current_frame_duration) {
@@ -334,9 +347,8 @@ int main(int argc, char* argv[]) {
                     animation_cycle_finished = true;
                     if (active_anim->loops) { current_anim_frame_idx = 0; }
                     else {
-                        // Don't decrement if it finished, stay on last frame until state change
                         current_anim_frame_idx = active_anim->frames.size() - 1;
-                        if (current_anim_frame_idx < 0) current_anim_frame_idx = 0; // Safety for 1-frame anims
+                        if (current_anim_frame_idx < 0) current_anim_frame_idx = 0;
                     }
                 }
             }
@@ -347,20 +359,17 @@ int main(int argc, char* argv[]) {
         }
 
 
-        // --- State Transition AFTER animation check (Walking -> Idle) ---
-        // (This logic remains unchanged)
+        // --- State Transition AFTER animation check (Walking -> Idle) --- (Unchanged)
         if (current_state == STATE_WALKING && animation_cycle_finished && !active_anim->loops) {
              queued_steps--; SDL_Log("Walk cycle finished. Steps remaining: %d", queued_steps);
              if (queued_steps > 0) {
-                 // Reset animation to loop the walk cycle if steps remain
                  current_anim_frame_idx = 0; last_anim_update_time = current_time;
                  animation_cycle_finished = false; SDL_Log("Starting next queued walk cycle.");
              } else {
                  SDL_Log("Switching to IDLE state."); current_state = STATE_IDLE;
-                 animation_needs_reset = true; // Trigger idle animation selection below
+                 animation_needs_reset = true;
              }
         }
-        // Re-select animation if needed after state transition (e.g., walking finished -> idle)
         if (animation_needs_reset && current_state == STATE_IDLE) {
              switch(current_digimon) { /* ... Set Idle Anim ... */
                 case DIGI_AGUMON:   active_anim = &agumon_idle_anim; break;
@@ -374,117 +383,83 @@ int main(int argc, char* argv[]) {
                 default:            active_anim = &agumon_idle_anim;
             }
             current_anim_frame_idx = 0; last_anim_update_time = current_time;
-            /* SDL_Log("Animation pointer updated and reset (Idle)."); */ // Quieter log
         }
 
 
         // =================== DRAWING STARTS HERE ==========================
         display.clear(0x0000); // Clear screen (black)
 
-        // --- Draw Background using Overlapping Tiles ---
+        // --- Helper Lambda for Drawing Background Tiles (Parameterized) --- (Unchanged)
+        auto drawClippedTile = [&](
+            int dest_x_unclipped, const uint16_t* tile_data,
+            int layer_tile_width, int layer_tile_height
+        ) {
+            int src_x = 0, src_y = 0;
+            int src_w = layer_tile_width, src_h = layer_tile_height;
+            int dest_x = dest_x_unclipped, dest_y = 0;
+            int dest_w = layer_tile_width, dest_h = layer_tile_height;
 
-        // Calculate the screen X coordinates for the top-left of the two tile instances
-        // Offset is subtracted because scrolling left means drawing the tile further left (negative offset)
-        // Uses the potentially updated bg_scroll_offset value
-        int draw_x1_unclipped = -static_cast<int>(bg_scroll_offset);
-        // Position the second tile instance using the NEW EFFECTIVE_BG_WIDTH
-        int draw_x2_unclipped = draw_x1_unclipped + EFFECTIVE_BG_WIDTH; // Uses the NEW value (~947)
-
-        // Helper lambda for drawing a potentially clipped tile portion
-        // This lambda now operates correctly with the NEW TILE_WIDTH and TILE_HEIGHT
-        // (read from the header) and the WINDOW_WIDTH/HEIGHT constants.
-        auto drawClippedTile = [&](int dest_x_unclipped) {
-            // Define the full source rectangle (the whole tile)
-            int src_x = 0;
-            int src_y = 0;
-            // These now refer to the NEW dimensions (e.g., 1421x474) via the header constants
-            int src_w = TILE_WIDTH;
-            int src_h = TILE_HEIGHT;
-
-            // Define the initial destination rectangle based on the unclipped position
-            int dest_x = dest_x_unclipped;
-            int dest_y = 0; // Draw background starting at the top of the window
-            int dest_w = TILE_WIDTH; // Uses NEW width
-            int dest_h = TILE_HEIGHT; // Uses NEW height
-
-            // --- Perform Clipping ---
-
-            // Clip Left edge: If tile starts left of the window (dest_x < 0)
+            // Clip Left
             if (dest_x < 0) {
-                int clip_amount = -dest_x; // How many pixels are off-screen left
-                // Check against NEW tile width
-                if (clip_amount >= TILE_WIDTH) return; // Entire tile is off-screen left, do nothing
-
-                // Adjust source and destination rectangles
-                src_x += clip_amount;    // Start reading source data further in
-                src_w -= clip_amount;    // Read fewer pixels from source
-                dest_w -= clip_amount;   // Draw fewer pixels on screen
-                dest_x = 0;              // Clamp draw position to left edge of window
+                int clip = -dest_x; if (clip >= layer_tile_width) return;
+                src_x += clip; src_w -= clip; dest_w -= clip; dest_x = 0;
             }
-
-            // Clip Right edge: If tile ends right of the window (dest_x + dest_w > WINDOW_WIDTH)
+            // Clip Right
             if (dest_x + dest_w > WINDOW_WIDTH) {
-                int clip_amount = (dest_x + dest_w) - WINDOW_WIDTH; // How many pixels are off-screen right
-                 // Check against NEW tile width (unlikely to fail if left clip was correct, but safe)
-                if (clip_amount >= TILE_WIDTH) return;
-
-                // Adjust source and destination widths (no need to adjust x/y)
-                src_w -= clip_amount;
-                dest_w -= clip_amount;
+                int clip = (dest_x + dest_w) - WINDOW_WIDTH; if (clip >= layer_tile_width) return;
+                src_w -= clip; dest_w -= clip;
             }
-
-            // Clip Bottom edge: If tile is taller than the window (dest_y + dest_h > WINDOW_HEIGHT)
-            // Added this because the new height (474) is > WINDOW_HEIGHT (466)
+            // Clip Bottom
             if (dest_y + dest_h > WINDOW_HEIGHT) {
-                 int clip_amount = (dest_y + dest_h) - WINDOW_HEIGHT; // How many pixels are off-screen bottom
-                 // Check against NEW tile height
-                 if (clip_amount >= TILE_HEIGHT) return; // Entire tile is off-screen bottom
-
-                 // Adjust source and destination heights (no need to adjust x/y or width)
-                 src_h -= clip_amount; // Read fewer rows from source
-                 dest_h -= clip_amount; // Draw fewer rows to screen
+                 int clip = (dest_y + dest_h) - WINDOW_HEIGHT; if (clip >= layer_tile_height) return;
+                 src_h -= clip; dest_h -= clip;
             }
+             // Clip Top (if dest_y could be < 0)
 
-            // Clip Top edge (Only needed if dest_y can be < 0)
-            // if (dest_y < 0) { ... similar logic ... }
-
-
-            // --- Draw if anything is left ---
-            // Check width AND height before drawing
+            // Draw if visible
             if (dest_w > 0 && src_w > 0 && dest_h > 0 && src_h > 0) {
-                // SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, "Drawing Tile Portion: Dest=(%d,%d %dx%d) Src=(%d,%d)", dest_x, dest_y, dest_w, dest_h, src_x, src_y);
-                display.drawPixels(dest_x, dest_y,         // Destination on screen (clipped)
-                                   dest_w, dest_h,         // Size on screen (clipped)
-                                   bg_data,                // Source tile data (Points to NEW data)
-                                   TILE_WIDTH, TILE_HEIGHT,// Dimensions of the *source data buffer* (Uses NEW header values)
-                                   src_x, src_y);          // Top-left corner to read from in source data (clipped)
+                display.drawPixels(dest_x, dest_y, dest_w, dest_h, tile_data,
+                                   layer_tile_width, layer_tile_height, src_x, src_y);
             }
-        };
+        }; // End of drawClippedTile lambda
 
-        // Draw the visible portions of the two potentially overlapping tile instances
-        drawClippedTile(draw_x1_unclipped);
-        drawClippedTile(draw_x2_unclipped);
+        // --- Draw Layers and Character in Correct Order ---
 
+        // Layer 2: Background (Slowest)
+        int draw2_x1_unclipped = -static_cast<int>(bg_scroll_offset_2);
+        int draw2_x2_unclipped = draw2_x1_unclipped + EFFECTIVE_BG_WIDTH_2;
+        drawClippedTile(draw2_x1_unclipped, bg_data_2, TILE_WIDTH_2, TILE_HEIGHT_2);
+        drawClippedTile(draw2_x2_unclipped, bg_data_2, TILE_WIDTH_2, TILE_HEIGHT_2);
 
-        // --- Draw Character Sprite ---
-        // (Character drawing logic remains unchanged, centering uses WINDOW_WIDTH/HEIGHT)
+        // Layer 1: Middleground (Medium)
+        int draw1_x1_unclipped = -static_cast<int>(bg_scroll_offset_1);
+        int draw1_x2_unclipped = draw1_x1_unclipped + EFFECTIVE_BG_WIDTH_1;
+        drawClippedTile(draw1_x1_unclipped, bg_data_1, TILE_WIDTH_1, TILE_HEIGHT_1);
+        drawClippedTile(draw1_x2_unclipped, bg_data_1, TILE_WIDTH_1, TILE_HEIGHT_1);
+
+        // *** Draw Character Sprite HERE (Before Foreground) ***
         if (active_anim && current_anim_frame_idx < active_anim->frames.size()) {
             const SpriteFrame& current_sprite_frame = active_anim->frames[current_anim_frame_idx];
-            if (current_sprite_frame.data) { // Check if sprite data is valid
-                // Center the sprite horizontally
+            if (current_sprite_frame.data) {
                 int draw_x = (WINDOW_WIDTH / 2) - (current_sprite_frame.width / 2);
-                // Center the sprite vertically - Adjust Y if needed (e.g., align bottom)
                 int draw_y = (WINDOW_HEIGHT / 2) - (current_sprite_frame.height / 2);
-                // Example: Align bottom with small offset:
-                // int draw_y = WINDOW_HEIGHT - current_sprite_frame.height - 10; // Adjust 10 as needed
+                // Adjust draw_y if needed, e.g., align bottom:
+                // int draw_y = WINDOW_HEIGHT - current_sprite_frame.height - 10;
 
                 display.drawPixels(draw_x, draw_y, current_sprite_frame.width, current_sprite_frame.height,
                                    current_sprite_frame.data, current_sprite_frame.width, current_sprite_frame.height,
-                                   0, 0); // Source x,y for sprite is always 0,0
+                                   0, 0);
             } else {
                  SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Attempted to draw sprite with NULL data!");
             }
         }
+
+        // Layer 0: Foreground (Fastest) - Drawn last, appears on top of character
+        int draw0_x1_unclipped = -static_cast<int>(bg_scroll_offset_0);
+        int draw0_x2_unclipped = draw0_x1_unclipped + EFFECTIVE_BG_WIDTH_0;
+        drawClippedTile(draw0_x1_unclipped, bg_data_0, TILE_WIDTH_0, TILE_HEIGHT_0);
+        drawClippedTile(draw0_x2_unclipped, bg_data_0, TILE_WIDTH_0, TILE_HEIGHT_0);
+
 
         // --- Update Screen ---
         display.present();
@@ -492,7 +467,7 @@ int main(int argc, char* argv[]) {
 
 
         // Frame Limiter (approx 60 FPS)
-        SDL_Delay(16); // Aim for 1000ms / 60fps ~= 16.6ms
+        SDL_Delay(16);
 
     } // End Main Game Loop
 
