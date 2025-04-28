@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"Z:/Digivice/build/cmake_install.cmake",
+		"Z:/Digivice/build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
